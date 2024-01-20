@@ -1,0 +1,752 @@
+# swagger.yml
+openapi: 3.0.0
+info:
+  title: "My First Flask REST API"
+  description: "An API about web service to managmant a firniture company"
+  version: "1.0.0"
+
+servers:
+  - url: "/api"
+
+components:
+  schemas:
+    Master:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+        name:
+          type: "string"
+        phone:
+          type: "integer"
+        exp:
+          type: "integer"
+    Client:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+        name:
+          type: "string"
+        phone:
+          type: "integer"
+        address:
+          type: "string"
+    Color:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+        name:
+          type: "string"
+    Type:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+        name:
+          type: "string"
+    Step:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+        name:
+          type: "string"
+    Contract:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+        client_id:
+          type: "integer"
+        date_1:
+          type: "string"
+          format: "date"
+        date_2:
+          type: "string"
+          format: "date"
+    Furniture:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+        name:
+          type: "string"
+        type_id:
+          type: "integer"
+        color_id:
+          type: "integer"
+        length:
+          type: "integer"
+        width:
+          type: "integer"         
+        height:
+          type: "integer"
+        price:
+          type: "integer"
+    Selling:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+        contract_id:
+          type: "integer"
+        furniture_id:
+          type: "integer"
+        count:
+          type: "integer"
+    Order:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+        master_id:
+          type: "integer"
+        selling_id:
+          type: "integer"
+        salary:
+          type: "integer"
+    OrderStatus:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+        order_id:
+          type: "integer"
+        order_status:
+          type: "integer"
+        check_date:
+          type: "string"
+          format: "date"
+
+  parameters:
+    id:
+      name: "iden"
+      description: "ID of the object to get"
+      in: path
+      required: True
+      schema:
+        type: "integer"
+
+paths:
+  /masters:
+    get:
+      operationId: "Controllers.master_controller.read_all"
+      tags:
+        - "Master"
+      summary: "Read the list of master"
+      responses:
+        "200":
+          description: "Successfully read master list"
+    post:
+      operationId: "Controllers.master_controller.create"
+      tags:
+        - "Master"
+      summary: "Create a master"
+      requestBody:
+          description: "Master to create"
+          required: True
+          content:
+            application/json:
+              schema:
+                x-body-name: "person"
+                $ref: "#/components/schemas/Master"
+      responses:
+        "201":
+          description: "Successfully created master"
+  /masters/{iden}:
+    get:
+      operationId: "Controllers.master_controller.read_one"
+      tags:
+        - Master  
+      summary: "Read one master"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: "Successfully read master"
+    put:
+      tags:
+        - Master
+      operationId: "Controllers.master_controller.update"
+      summary: "Update a person"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: "Successfully updated master"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: "person"
+              $ref: "#/components/schemas/Master"
+    delete:
+      tags:
+        - Master
+      operationId: "Controllers.master_controller.delete"
+      summary: "Delete a master"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "204":
+          description: "Successfully deleted person"
+  /clients:
+    get:
+      operationId: "Controllers.client_controller.read_all"
+      tags:
+        - "Client"
+      summary: "Read the list of client"
+      responses:
+        "200":
+          description: "Successfully read client list"
+    post:
+      operationId: "Controllers.client_controller.create"
+      tags:
+        - "Client"
+      summary: "Create a client"
+      requestBody:
+          description: "Client to create"
+          required: True
+          content:
+            application/json:
+              schema:
+                x-body-name: "person"
+                $ref: "#/components/schemas/Client"
+      responses:
+        "201":
+          description: "Successfully created client"
+  /clients/{iden}:
+    get:
+      operationId: "Controllers.client_controller.read_one"
+      tags:
+        - Client  
+      summary: "Read one client"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: "Successfully read client"
+    put:
+      tags:
+        - Client
+      operationId: "Controllers.client_controller.update"
+      summary: "Update a client"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: "Successfully updated client"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: "person"
+              $ref: "#/components/schemas/Client"
+    delete:
+      tags:
+        - Client
+      operationId: "Controllers.client_controller.delete"
+      summary: "Delete a client"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "204":
+          description: "Successfully deleted client"
+  /colors:
+    get:
+      operationId: "Controllers.color_controller.read_all"
+      tags:
+        - "Color"
+      summary: "Read the list of color"
+      responses:
+        "200":
+          description: "Successfully read color list"
+    post:
+      operationId: "Controllers.color_controller.create"
+      tags:
+        - "Color"
+      summary: "Create a color"
+      requestBody:
+          description: "Color to create"
+          required: True
+          content:
+            application/json:
+              schema:
+                x-body-name: "person"
+                $ref: "#/components/schemas/Color"
+      responses:
+        "201":
+          description: "Successfully created color"
+  /colors/{iden}:
+    get:
+      operationId: "Controllers.color_controller.read_one"
+      tags:
+        - Color  
+      summary: "Read one color"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: "Successfully read color"
+    put:
+      tags:
+        - Color
+      operationId: "Controllers.color_controller.update"
+      summary: "Update a color"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: "Successfully updated color"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: "person"
+              $ref: "#/components/schemas/Color"
+    delete:
+      tags:
+        - Color
+      operationId: "Controllers.color_controller.delete"
+      summary: "Delete a color"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "204":
+          description: "Successfully deleted color"
+  /steps:
+    get:
+      operationId: "Controllers.step_controller.read_all"
+      tags:
+        - "Step"
+      summary: "Read the list of step"
+      responses:
+        "200":
+          description: "Successfully read step list"
+    post:
+      operationId: "Controllers.step_controller.create"
+      tags:
+        - "Step"
+      summary: "Create a step"
+      requestBody:
+          description: "Step to create"
+          required: True
+          content:
+            application/json:
+              schema:
+                x-body-name: "person"
+                $ref: "#/components/schemas/Step"
+      responses:
+        "201":
+          description: "Successfully created step"
+  /steps/{iden}:
+    get:
+      operationId: "Controllers.step_controller.read_one"
+      tags:
+        - Step  
+      summary: "Read one step"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: "Successfully read step"
+    put:
+      tags:
+        - Step
+      operationId: "Controllers.step_controller.update"
+      summary: "Update a step"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: "Successfully updated step"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: "person"
+              $ref: "#/components/schemas/Step"
+    delete:
+      tags:
+        - Step
+      operationId: "Controllers.step_controller.delete"
+      summary: "Delete a step"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "204":
+          description: "Successfully deleted step"
+  /types:
+    get:
+      operationId: "Controllers.type_controller.read_all"
+      tags:
+        - "Type"
+      summary: "Read the list of type"
+      responses:
+        "200":
+          description: "Successfully read type list"
+    post:
+      operationId: "Controllers.type_controller.create"
+      tags:
+        - "Type"
+      summary: "Create a type"
+      requestBody:
+          description: "Type to create"
+          required: True
+          content:
+            application/json:
+              schema:
+                x-body-name: "person"
+                $ref: "#/components/schemas/Type"
+      responses:
+        "201":
+          description: "Successfully created type"
+  /types/{iden}:
+    get:
+      operationId: "Controllers.type_controller.read_one"
+      tags:
+        - Type  
+      summary: "Read one type"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: "Successfully read type"
+    put:
+      tags:
+        - Type
+      operationId: "Controllers.type_controller.update"
+      summary: "Update a type"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: "Successfully updated type"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: "person"
+              $ref: "#/components/schemas/Type"
+    delete:
+      tags:
+        - Type
+      operationId: "Controllers.type_controller.delete"
+      summary: "Delete a type"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "204":
+          description: "Successfully deleted type"
+  /furnitures:
+    get:
+      operationId: "Controllers.furniture_controller.read_all"
+      tags:
+        - "Furniture"
+      summary: "Read the list of Furniture"
+      responses:
+        "200":
+          description: "Successfully read Furniture list"
+    post:
+      operationId: "Controllers.furniture_controller.create"
+      tags:
+        - "Furniture"
+      summary: "Create a Furniture"
+      requestBody:
+          description: "Furniture to create"
+          required: True
+          content:
+            application/json:
+              schema:
+                x-body-name: "person"
+                $ref: "#/components/schemas/Furniture"
+      responses:
+        "201":
+          description: "Successfully created Furniture"
+  /furnitures/{iden}:
+    get:
+      operationId: "Controllers.furniture_controller.read_one"
+      tags:
+        - Furniture  
+      summary: "Read one Furniture"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: "Successfully read Furniture"
+    put:
+      tags:
+        - Furniture
+      operationId: "Controllers.furniture_controller.update"
+      summary: "Update a Furniture"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: "Successfully updated Furniture"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: "person"
+              $ref: "#/components/schemas/Furniture"
+    delete:
+      tags:
+        - Furniture
+      operationId: "Controllers.furniture_controller.delete"
+      summary: "Delete a Furniture"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "204":
+          description: "Successfully deleted Furniture"
+  /contracts:
+    get:
+      operationId: "Controllers.contract_controller.read_all"
+      tags:
+        - "Contract"
+      summary: "Read the list of Contract"
+      responses:
+        "200":
+          description: "Successfully read Contract list"
+    post:
+      operationId: "Controllers.contract_controller.create"
+      tags:
+        - "Contract"
+      summary: "Create a Contract"
+      requestBody:
+          description: "Contract to create"
+          required: True
+          content:
+            application/json:
+              schema:
+                x-body-name: "person"
+                $ref: "#/components/schemas/Contract"
+      responses:
+        "201":
+          description: "Successfully created Contract"
+  /contracts/{iden}:
+    get:
+      operationId: "Controllers.contract_controller.read_one"
+      tags:
+        - Contract  
+      summary: "Read one Contract"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: "Successfully read Contract"
+    put:
+      tags:
+        - Contract
+      operationId: "Controllers.contract_controller.update"
+      summary: "Update a Contract"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: "Successfully updated Contract"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: "person"
+              $ref: "#/components/schemas/Contract"
+    delete:
+      tags:
+        - Contract
+      operationId: "Controllers.contract_controller.delete"
+      summary: "Delete a Contract"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "204":
+          description: "Successfully deleted Contract"
+  /sellings:
+    get:
+      operationId: "Controllers.selling_controller.read_all"
+      tags:
+        - "Selling"
+      summary: "Read the list of Selling"
+      responses:
+        "200":
+          description: "Successfully read Selling list"
+    post:
+      operationId: "Controllers.selling_controller.create"
+      tags:
+        - "Selling"
+      summary: "Create a Selling"
+      requestBody:
+          description: "Selling to create"
+          required: True
+          content:
+            application/json:
+              schema:
+                x-body-name: "person"
+                $ref: "#/components/schemas/Selling"
+      responses:
+        "201":
+          description: "Successfully created Selling"
+  /sellings/{iden}:
+    get:
+      operationId: "Controllers.selling_controller.read_one"
+      tags:
+        - Selling  
+      summary: "Read one Selling"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: "Successfully read Selling"
+    put:
+      tags:
+        - Selling
+      operationId: "Controllers.selling_controller.update"
+      summary: "Update a Selling"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: "Successfully updated Selling"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: "person"
+              $ref: "#/components/schemas/Selling"
+    delete:
+      tags:
+        - Selling
+      operationId: "Controllers.selling_controller.delete"
+      summary: "Delete a Selling"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "204":
+          description: "Successfully deleted Selling"
+  /orders:
+    get:
+      operationId: "Controllers.order_controller.read_all"
+      tags:
+        - "Order"
+      summary: "Read the list of Order"
+      responses:
+        "200":
+          description: "Successfully read Order list"
+    post:
+      operationId: "Controllers.order_controller.create"
+      tags:
+        - "Order"
+      summary: "Create a Order"
+      requestBody:
+          description: "Order to create"
+          required: True
+          content:
+            application/json:
+              schema:
+                x-body-name: "person"
+                $ref: "#/components/schemas/Order"
+      responses:
+        "201":
+          description: "Successfully created Order"
+  /orders/{iden}:
+    get:
+      operationId: "Controllers.order_controller.read_one"
+      tags:
+        - Order  
+      summary: "Read one Order"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: "Successfully read Order"
+    put:
+      tags:
+        - Order
+      operationId: "Controllers.order_controller.update"
+      summary: "Update a Order"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: "Successfully updated Order"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: "person"
+              $ref: "#/components/schemas/Order"
+    delete:
+      tags:
+        - Order
+      operationId: "Controllers.order_controller.delete"
+      summary: "Delete a Order"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "204":
+          description: "Successfully deleted Order"
+  /order_statuses:
+    get:
+      operationId: "Controllers.order_status_controller.read_all"
+      tags:
+        - "OrderStatus"
+      summary: "Read the list of OrderStatus"
+      responses:
+        "200":
+          description: "Successfully read OrderStatus list"
+    post:
+      operationId: "Controllers.order_status_controller.create"
+      tags:
+        - "OrderStatus"
+      summary: "Create a OrderStatus"
+      requestBody:
+          description: "OrderStatus to create"
+          required: True
+          content:
+            application/json:
+              schema:
+                x-body-name: "person"
+                $ref: "#/components/schemas/OrderStatus"
+      responses:
+        "201":
+          description: "Successfully created OrderStatus"
+  /order_statuses/{iden}:
+    get:
+      operationId: "Controllers.order_status_controller.read_one"
+      tags:
+        - OrderStatus  
+      summary: "Read one OrderStatus"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: "Successfully read OrderStatus"
+    put:
+      tags:
+        - OrderStatus
+      operationId: "Controllers.order_status_controller.update"
+      summary: "Update a OrderStatus"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: "Successfully updated OrderStatus"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: "person"
+              $ref: "#/components/schemas/OrderStatus"
+    delete:
+      tags:
+        - OrderStatus
+      operationId: "Controllers.order_status_controller.delete"
+      summary: "Delete a OrderStatus"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "204":
+          description: "Successfully deleted OrderStatus"
